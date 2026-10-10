@@ -4,8 +4,20 @@ const { parseDuration } = require('../../utils/duration');
 const { roleId, isNone } = require('../../utils/parse');
 const { refreshMessage } = require('../../services/giveaways');
 const { logEvent } = require('../../services/cases');
+const { fieldSubcommands } = require('../../utils/subcommands');
 
 const FIELDS = ['prize', 'description', 'winners', 'duration', 'extend', 'role', 'bonus', 'image', 'color'];
+const HINTS = {
+  prize: { about: 'Change the prize.', value: 'New prize.', max: 200 },
+  description: { about: 'Change the giveaway description.', value: 'New text. Use \\n for a new line, or "none" to remove it.', max: 1500 },
+  winners: { about: 'Change the number of winners.', value: 'Number from 1 to 50.', max: 3 },
+  duration: { about: 'Set a new end time, counted from now.', value: 'Duration like 30m, 2h or 1d12h.', max: 20 },
+  extend: { about: 'Add more time to the giveaway.', value: 'Extra time like 30m, 2h or 1d12h.', max: 20 },
+  role: { about: 'Change the role required to enter.', value: 'Role mention or ID, or "none" to remove it.', max: 100 },
+  bonus: { about: 'Change the bonus entries role.', value: '@role [entries 2-20], or "none" to remove it.', max: 100 },
+  image: { about: 'Change the giveaway image.', value: 'Image URL (http/https), or "none" to remove it.', max: 500 },
+  color: { about: 'Change the embed color.', value: 'Hex color like #5865F2, or "none".', max: 20 },
+};
 const LIVE_ONLY = ['winners', 'duration', 'extend', 'role', 'bonus'];
 const MAX_MS = 365 * 24 * 60 * 60 * 1000;
 
@@ -19,6 +31,8 @@ module.exports = {
     { name: 'field', type: 'string', description: 'What to change', required: true, choices: FIELDS },
     { name: 'value', type: 'string', description: 'New value. "none" clears role, bonus, image, color or description.', required: true, maxLength: 1500 },
   ],
+  subKey: 'field',
+  subcommands: fieldSubcommands(FIELDS, HINTS, [{ name: 'id', type: 'integer', description: 'Giveaway number', required: true, min: 1 }]),
   async run(ctx, args) {
     const g = await Giveaway.findOne({ guildId: ctx.guild.id, giveawayId: args.id });
     if (!g) return ctx.reply({ embeds: [embeds.error(`Giveaway #${args.id} was not found.`)] });
