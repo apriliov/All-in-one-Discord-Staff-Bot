@@ -32,6 +32,13 @@ module.exports = {
       for (const opt of cmd.options) {
         embed.addFields({ name: `${opt.required ? '<' : '['}${opt.name}${opt.required ? '>' : ']'}`, value: opt.description });
       }
+      if (cmd.subcommands) {
+        const lines = cmd.subcommands.map((s) => {
+          const opts = (s.options || []).map((o) => (o.required ? `<${o.name}>` : `[${o.name}]`)).join(' ');
+          return `\`/${cmd.name} ${s.name}${opts ? ` ${opts}` : ''}\``;
+        });
+        embed.addFields({ name: 'Slash subcommands', value: lines.join('\n').slice(0, 1024) });
+      }
       return ctx.reply({ embeds: [embed.setFooter({ text: '<required>  [optional]' })] });
     }
 
