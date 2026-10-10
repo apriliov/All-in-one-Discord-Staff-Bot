@@ -16,6 +16,11 @@ module.exports = {
     { name: 'action', type: 'string', required: true, description: 'on = lock everything, off = lift the lockdown, status = show the state', choices: ['on', 'off', 'status'] },
     { name: 'reason', type: 'string', description: 'Reason (written to the log)', maxLength: 300 },
   ],
+  subcommands: [
+    { name: 'on', description: 'Lock ALL text and voice channels for members.', options: [{ name: 'reason', type: 'string', description: 'Reason (written to the log)', maxLength: 300 }] },
+    { name: 'off', description: 'Lift the lockdown and restore the old permissions.', options: [{ name: 'reason', type: 'string', description: 'Reason (written to the log)', maxLength: 300 }] },
+    { name: 'status', description: 'Show if a lockdown is active.' },
+  ],
   async run(ctx, args) {
     if (!ctx.isSlash) ctx.channel.sendTyping().catch(() => {});
     const reason = args.reason || 'No reason given';
