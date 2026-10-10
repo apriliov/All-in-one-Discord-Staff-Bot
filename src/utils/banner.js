@@ -21,7 +21,7 @@ const LICENSE_LINES = [
 ];
 
 const FEATURES = [
-  'Slash commands and prefix commands (default prefix !, set PREFIX in .env)',
+  'Slash commands and prefix commands (choose your own prefix with PREFIX in .env)',
   'Moderation toolkit: warn, timeout, kick, ban, softban, purge and a full case history',
   'Modmail: private tickets, transcripts, open/close switch and editable welcome and close messages',
   'Ticket system: panels with buttons or menus, topics, forms, claim, priority, transcripts, ratings and auto-close',
