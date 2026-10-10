@@ -1,21 +1,33 @@
-MIT License
+APRILIOV USE-ONLY LICENSE
 
-Copyright (c) 2026 APRILIOV
+Copyright (c) 2026 APRILIOV. All rights reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is granted to any person to use this software and its associated
+files (the "Software") free of charge, under the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. Use only. You may install and run the Software, and configure it through
+   its normal settings (for example the .env file and the in-app commands).
+
+2. No modification. You may not modify, adapt, translate, decompile, reverse
+   engineer or create derivative works from the Software or any part of it.
+
+3. No selling. You may not sell, resell, rent, lease, sublicense or charge
+   money for the Software or for access to it, in whole or in part, and you
+   may not include it in any paid product or service.
+
+4. No redistribution. You may not publish, upload, share or distribute the
+   Software or any copy of it to other people.
+
+5. Notices. The copyright and license notice must stay intact.
+
+6. Ownership. The Software remains the property of APRILIOV. No rights are
+   granted other than those stated in this license.
+
+7. Termination. If you break these terms, your right to use the Software ends.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
