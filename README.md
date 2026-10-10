@@ -1,3 +1,5 @@
+<p align="center"> <img src="./" alt="Store Bot - Discord Store & Community Management" width="100%"> </p>
+
 # Staff Helper Bot
 
 A private Discord bot for the **helpers, admins and owner** of a private server.
