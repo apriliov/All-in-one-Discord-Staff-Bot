@@ -1,4 +1,4 @@
-<p align="center"> <img src="./" alt="Store Bot - Discord Store & Community Management" width="100%"> </p>
+<p align="center"> <img src="./1000360844.png" alt="All-in-one Staff Discord Bot - Discord Support & Community Management" width="100%"> </p>
 
 # Staff Helper Bot
 
