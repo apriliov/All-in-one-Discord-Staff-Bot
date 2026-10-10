@@ -157,6 +157,8 @@ Everyone else is ignored (prefix) or politely refused (slash). Staff cannot mode
 
 Every command works as a slash command (`/warn`) and with your text prefix (`!warn`). Examples in this README use the default prefix `!`. If you changed `PREFIX` in `.env`, use your own prefix instead. Use `help` to see the commands you can use, or `help <command>` for details.
 
+Commands that have several actions or editable fields show up in Discord's slash menu as **subcommands**, for example `/modmail welcome`, `/lockdown on`, `/ticketsetup claim` or `/paneledit title`. With the prefix you write the same thing as plain text (`!modmail welcome`, `!lockdown on`, `!ticketsetup claim on`, `!paneledit 1 title ...`).
+
 ### Utility
 
 | Command | Aliases | Level | Description |
@@ -217,7 +219,7 @@ Every command works as a slash command (`/warn`) and with your text prefix (`!wa
 
 | Command | Aliases | Level | Description |
 |---------|---------|:-----:|-------------|
-| `modmail` | | Admin | `open` / `close` the system, or edit the `welcome` and `closemsg` messages. |
+| `modmail` | | Admin | `status`, `open`, `close` the system, or edit the `welcome` and `closemsg` messages. Slash: `/modmail <subcommand>`. |
 | `close` | `ticketclose`, `tclose` | Helper | Close the modmail thread or ticket in this channel. A transcript is saved. |
 
 ### Tickets
@@ -311,9 +313,9 @@ Members DM the bot and a ticket channel is created in the modmail category (set 
 - When a ticket opens, the admin role(s) set with `!adminrole` are tagged in the ticket channel. The role must be **mentionable**, or the bot needs the **Mention Everyone** permission (already in the invite link), otherwise nobody is notified.
 - The ticket info message has a **Close Ticket** button (or use `!close [reason]`). When a ticket is closed, the channel is deleted, the user gets a DM, and the transcript is sent by DM to the staff member who closed it (a copy also goes to the log channel if one is set).
 - If the user messages again after a ticket was closed, the welcome message shows again and a new channel is created.
-- `!modmail open` / `!modmail close` turns the whole system on or off. While it is **closed**, DMs do not open a channel (existing tickets keep working).
+- `/modmail open` / `/modmail close` (or `!modmail open` / `!modmail close`) turns the whole system on or off. `/modmail status` shows the current state. While it is **closed**, DMs do not open a channel (existing tickets keep working).
 - The bot status is automatic: `<custom status> | Modmail Open` or `<custom status> | Modmail Close`. Change the custom part with `!setstatus <text>` (empty resets it).
-- `!modmail welcome` edits the welcome message (slash opens a form, prefix: `!modmail welcome Title | Description`). `!modmail closemsg` edits the message the user gets when a ticket closes. Use `reset` to go back to the default. Variables: `{server}`, `{user}`, `{username}` and, for the close message, `{reason}`.
+- `/modmail welcome` edits the welcome message (slash opens a form, prefix: `!modmail welcome Title | Description`). `/modmail closemsg` edits the message the user gets when a ticket closes. Use `reset` to go back to the default. Variables: `{server}`, `{user}`, `{username}` and, for the close message, `{reason}`.
 - The bot needs **Manage Channels** in the ticket category. No extra intent is needed for DMs.
 
 ### Tickets (support panels)
@@ -347,7 +349,7 @@ Members enter with a button (no reactions needed). Giveaways survive restarts an
 
 **`lock` / `unlock`** work on one channel. `lock` blocks sending, reactions and thread creation for members. It also denies every role that explicitly *allows* sending in that channel (a plain `@everyone` deny does not beat those). The bot and the helper/admin roles keep talking. The original permissions are saved and `unlock` restores them exactly. In a thread, `lock` uses Discord's thread lock.
 
-**`lockdown`** (`!lockdown on [reason]`, alias `!ld on`, or `/lockdown action:on`) locks **every text, announcement, forum and voice/stage channel** at once, so members cannot send messages, react, create threads, join voice, speak or stream. Staff roles and the bot keep access.
+**`lockdown`** (`!lockdown on [reason]`, alias `!ld on`, or `/lockdown on`) locks **every text, announcement, forum and voice/stage channel** at once, so members cannot send messages, react, create threads, join voice, speak or stream. Staff roles and the bot keep access.
 
 - `lockdown off` puts every permission back exactly as it was. `lockdown status` shows whether a lockdown is active.
 - Channels you locked by hand with `lock` are skipped and stay locked after `lockdown off`.
@@ -377,7 +379,7 @@ Requirements:
 Every sync **overwrites** the active scope and **clears leftovers** in the other scopes (global, other servers), so old or duplicated commands disappear.
 
 - Automatic on start, or manually with `npm run deploy` (prints the active list and what was removed).
-- In Discord (owner): `/slash action:list` shows what is registered (`⚠️` = no longer in the code), `/slash action:sync` cleans it up.
+- In Discord (owner): `/slash list` shows what is registered (`⚠️` = no longer in the code), `/slash sync` cleans it up.
 
 ---
 
