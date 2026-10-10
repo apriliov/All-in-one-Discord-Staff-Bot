@@ -173,8 +173,23 @@ module.exports = {
   ephemeral: true,
   noDefer: true,
   options: [
-    { name: 'action', type: 'string', description: 'open, close, welcome or closemsg', choices: ['open', 'close', 'welcome', 'closemsg'] },
+    { name: 'action', type: 'string', description: 'open, close, welcome, closemsg or status', choices: ['open', 'close', 'welcome', 'closemsg', 'status'] },
     { name: 'text', type: 'string', description: 'welcome: Title | Description. closemsg: the message. Use "reset" for default.', maxLength: 3000 },
+  ],
+  subcommands: [
+    { name: 'status', description: 'Show if modmail is open or closed.' },
+    { name: 'open', description: 'Turn modmail on: new DMs open a ticket again.' },
+    { name: 'close', description: 'Turn modmail off: new DMs do not open a ticket. Existing tickets keep working.' },
+    {
+      name: 'welcome',
+      description: 'Edit the welcome message users get when a ticket opens.',
+      options: [{ name: 'text', type: 'string', description: 'Title | Description. "reset" = default. Leave empty to open a form.', maxLength: 3000 }],
+    },
+    {
+      name: 'closemsg',
+      description: 'Edit the message users get when a ticket closes.',
+      options: [{ name: 'text', type: 'string', description: 'The message. "reset" = default. Leave empty to open a form.', maxLength: 3000 }],
+    },
   ],
   async run(ctx, args) {
     const action = args.action || null;
@@ -196,9 +211,10 @@ module.exports = {
           .setTitle('Modmail')
           .setDescription(
             `Modmail is currently **${isOpen ? 'open' : 'closed'}**.\n\n` +
-              '`{prefix}modmail open` / `{prefix}modmail close`: turn new tickets on or off\n' +
-              '`{prefix}modmail welcome`: edit the welcome message\n' +
-              '`{prefix}modmail closemsg`: edit the close message'
+              '`/modmail open` or `{prefix}modmail open`: turn new tickets on\n' +
+              '`/modmail close` or `{prefix}modmail close`: turn new tickets off\n' +
+              '`/modmail welcome` or `{prefix}modmail welcome`: edit the welcome message\n' +
+              '`/modmail closemsg` or `{prefix}modmail closemsg`: edit the close message'
           ),
       ],
     });
