@@ -47,7 +47,7 @@ module.exports = {
           { name: 'Auto-close', value: settings.autoCloseHours ? `${settings.autoCloseHours}h without activity` : 'off', inline: true },
           { name: 'Channel name', value: `\`${settings.namePattern}\``, inline: true }
         )
-        .setFooter({ text: 'Change with: z ticketsetup <setting> <value>' });
+        .setFooter({ text: 'Change with: {prefix}ticketsetup <setting> <value>' });
       return ctx.reply({ embeds: [embed] });
     }
 

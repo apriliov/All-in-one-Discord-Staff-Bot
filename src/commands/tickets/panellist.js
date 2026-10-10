@@ -31,6 +31,6 @@ module.exports = {
     const panels = await TicketPanel.find({ guildId: ctx.guild.id }).sort({ panelId: 1 }).lean();
     if (!panels.length) return ctx.reply({ embeds: [embeds.info('No panels yet. Create one with `{prefix}panelcreate #channel`.')] });
     const lines = panels.map((p) => `**#${p.panelId}** • ${truncate(p.title, 40)} • ${p.channelId ? `<#${p.channelId}>` : 'no channel'} • ${p.style} • ${p.topics.length} topic(s)`);
-    return ctx.reply({ embeds: [new EmbedBuilder().setColor(config.colors.brand).setTitle('Ticket panels').setDescription(truncate(lines.join('\n'), 4000)).setFooter({ text: 'Details: z panellist <id>' })] });
+    return ctx.reply({ embeds: [new EmbedBuilder().setColor(config.colors.brand).setTitle('Ticket panels').setDescription(truncate(lines.join('\n'), 4000)).setFooter({ text: 'Details: {prefix}panellist <id>' })] });
   },
 };
