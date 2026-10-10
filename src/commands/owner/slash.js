@@ -20,6 +20,10 @@ module.exports = {
       choices: ['list', 'sync'],
     },
   ],
+  subcommands: [
+    { name: 'list', description: 'Show the registered slash commands (a warning sign = no longer in the code).' },
+    { name: 'sync', description: 'Overwrite the slash commands and remove old or duplicate ones.' },
+  ],
   async run(ctx, args) {
     const action = args.action || 'list';
     const extraGuildIds = [...ctx.client.guilds.cache.keys()];
