@@ -4,7 +4,7 @@ A private Discord bot for the **helpers, admins and owner** of a private server.
 It works with **slash commands** and a **text prefix** (default `!`, so `!ping` works).
 Data is stored in **MongoDB**. Only the official bot token and the official Discord API are used (no self-bots, no user tokens).
 
-Report bugs in this code to the email team@namaiki.xyz.
+Need help or found a bug? Join our Discord server at https://support.namaiki.xyz or report bugs in this code to the email team@namaiki.xyz.
 
 ## Table of contents
 
