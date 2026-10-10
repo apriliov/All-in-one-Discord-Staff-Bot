@@ -1,0 +1,20 @@
+{
+  "name": "staff-helper-bot",
+  "version": "1.1.0",
+  "description": "Private staff helper bot for Discord servers (helpers, admins and owner only). Slash commands + prefix (z / Z).",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "deploy": "node src/scripts/deploy-commands.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "discord.js": "^14.16.3",
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.7.0"
+  },
+  "author": "APRILIOV",
+  "license": "MIT"
+}
