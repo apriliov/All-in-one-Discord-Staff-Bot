@@ -13,6 +13,33 @@ function walk(dir) {
   });
 }
 
+const NAME_RE = /^[a-z0-9_-]{1,32}$/;
+
+function checkOptions(label, options) {
+  if (options.length > 25) throw new Error(`${label}: max 25 options.`);
+  let seenOptional = false;
+  for (const opt of options) {
+    if (!NAME_RE.test(opt.name)) throw new Error(`${label}: invalid option name "${opt.name}".`);
+    if (!opt.description || opt.description.length > 100) throw new Error(`${label}: option "${opt.name}" needs a description of 1-100 chars.`);
+    if (!opt.required) seenOptional = true;
+    else if (seenOptional) throw new Error(`${label}: required option "${opt.name}" must come first.`);
+  }
+}
+
+function checkSubcommands(cmd) {
+  const subs = cmd.subcommands;
+  if (subs === undefined) return;
+  if (!Array.isArray(subs) || subs.length < 1 || subs.length > 25) throw new Error(`Command ${cmd.name}: "subcommands" must be a list of 1-25 items.`);
+  const seen = new Set();
+  for (const sub of subs) {
+    if (!sub.name || !NAME_RE.test(sub.name)) throw new Error(`Command ${cmd.name}: invalid subcommand name "${sub.name}".`);
+    if (seen.has(sub.name)) throw new Error(`Command ${cmd.name}: duplicate subcommand "${sub.name}".`);
+    seen.add(sub.name);
+    if (!sub.description || sub.description.length > 100) throw new Error(`Command ${cmd.name} ${sub.name}: description needs 1-100 chars.`);
+    checkOptions(`Command ${cmd.name} ${sub.name}`, sub.options || []);
+  }
+}
+
 function loadCommands() {
   const commands = new Map();
   const aliases = new Map();
@@ -28,19 +55,10 @@ function loadCommands() {
     if (!/^[a-z0-9_-]{1,32}$/.test(cmd.name)) throw new Error(`Command ${cmd.name}: name must be 1-32 chars of a-z, 0-9, _ or -.`);
     if (cmd.description.length > 100) throw new Error(`Command ${cmd.name}: description is ${cmd.description.length} chars (max 100).`);
     if (!cmd.category) throw new Error(`Command ${cmd.name}: missing "category".`);
-    if ((cmd.options || []).length > 25) throw new Error(`Command ${cmd.name}: max 25 options.`);
-    for (const opt of cmd.options || []) {
-      if (!/^[a-z0-9_-]{1,32}$/.test(opt.name)) throw new Error(`Command ${cmd.name}: invalid option name "${opt.name}".`);
-      if (!opt.description || opt.description.length > 100) throw new Error(`Command ${cmd.name}: option "${opt.name}" needs a description of 1-100 chars.`);
-    }
+    checkOptions(`Command ${cmd.name}`, cmd.options || []);
+    checkSubcommands(cmd);
     if (!VALID_LEVELS.includes(cmd.level)) throw new Error(`Command ${cmd.name}: invalid level "${cmd.level}".`);
     if (commands.has(cmd.name)) throw new Error(`Duplicate command name "${cmd.name}" (${label}).`);
-
-    let seenOptional = false;
-    for (const opt of cmd.options || []) {
-      if (!opt.required) seenOptional = true;
-      else if (seenOptional) throw new Error(`Command ${cmd.name}: required option "${opt.name}" must come first.`);
-    }
 
     cmd.options = cmd.options || [];
     cmd.aliases = cmd.aliases || [];
