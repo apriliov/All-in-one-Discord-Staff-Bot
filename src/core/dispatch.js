@@ -28,7 +28,7 @@ async function dispatch(ctx, command, rawArgs = '') {
     }
 
     const args = ctx.isSlash
-      ? await resolveSlashArgs(ctx, command.options)
+      ? await resolveSlashArgs(ctx, command)
       : await parsePrefixArgs(ctx, command.options, rawArgs);
 
     await command.run(ctx, args);

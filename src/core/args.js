@@ -7,13 +7,8 @@ function usageOf(cmd) {
   return `${cmd.name}${opts ? ` ${opts}` : ''}`;
 }
 
-function buildSlashCommand(cmd) {
-  const builder = new SlashCommandBuilder()
-    .setName(cmd.name)
-    .setDescription(cmd.description)
-    .setContexts([InteractionContextType.Guild]);
-
-  for (const opt of cmd.options || []) {
+function applyOptions(builder, options = []) {
+  for (const opt of options) {
     const base = (o) => {
       o.setName(opt.name).setDescription(opt.description).setRequired(!!opt.required);
       return o;
@@ -56,15 +51,49 @@ function buildSlashCommand(cmd) {
         });
         break;
       default:
-        throw new Error(`Unknown option type "${opt.type}" in command "${cmd.name}".`);
+        throw new Error(`Unknown option type "${opt.type}".`);
     }
   }
   return builder;
 }
 
-async function resolveSlashArgs(ctx, options = []) {
+// A command can have "subcommands" for Discord's slash menu (/modmail welcome). The prefix version keeps
+// using "options" (!modmail welcome ...). The chosen subcommand name is handed to run() as args[subKey].
+const subKeyOf = (cmd) => cmd.subKey || 'action';
+
+function buildSlashCommand(cmd) {
+  const builder = new SlashCommandBuilder()
+    .setName(cmd.name)
+    .setDescription(cmd.description)
+    .setContexts([InteractionContextType.Guild]);
+
+  if (cmd.subcommands && cmd.subcommands.length) {
+    for (const sub of cmd.subcommands) {
+      builder.addSubcommand((s) => {
+        s.setName(sub.name).setDescription(sub.description);
+        applyOptions(s, sub.options);
+        return s;
+      });
+    }
+    return builder;
+  }
+
+  applyOptions(builder, cmd.options);
+  return builder;
+}
+
+async function resolveSlashArgs(ctx, command) {
   const i = ctx.interaction;
   const args = {};
+  let options = Array.isArray(command) ? command : command.options || [];
+
+  if (!Array.isArray(command) && command.subcommands && command.subcommands.length) {
+    const name = i.options.getSubcommand();
+    const sub = command.subcommands.find((s) => s.name === name);
+    args[subKeyOf(command)] = name;
+    options = (sub && sub.options) || [];
+  }
+
   for (const opt of options) {
     let value = null;
     switch (opt.type) {
@@ -194,4 +223,4 @@ async function parsePrefixArgs(ctx, options = [], raw = '') {
   return args;
 }
 
-module.exports = { UsageError, usageOf, buildSlashCommand, resolveSlashArgs, parsePrefixArgs };
+module.exports = { UsageError, usageOf, buildSlashCommand, resolveSlashArgs, parsePrefixArgs, subKeyOf };
