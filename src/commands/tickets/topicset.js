@@ -4,9 +4,21 @@ const { refreshPanel } = require('../../services/tickets');
 const { getPanel, findTopic, parseQuestions } = require('../../services/ticketAdmin');
 const { roleId, channelId, isNone, emojiObject } = require('../../utils/parse');
 const { logEvent } = require('../../services/cases');
+const { fieldSubcommands } = require('../../utils/subcommands');
 
 const FIELDS = ['label', 'emoji', 'description', 'color', 'category', 'role', 'welcome', 'name', 'questions'];
 const COLORS = ['blurple', 'grey', 'green', 'red'];
+const HINTS = {
+  label: { about: 'Change the topic label.', value: 'New label.', max: 80 },
+  emoji: { about: 'Change the topic emoji.', value: 'An emoji, or "none" to remove it.', max: 100 },
+  description: { about: 'Change the topic description (menu style).', value: 'Text (max 100 chars), or "none" to remove it.', max: 100 },
+  color: { about: 'Change the topic button color.', value: 'blurple, grey, green or red', max: 10, choices: COLORS },
+  category: { about: 'Create this topic\'s tickets in another category.', value: 'Category ID, or "none" to use the default.', max: 100 },
+  role: { about: 'Add or remove a support role for this topic.', value: 'Role mention or ID (use it again to remove it), or "none" to clear.', max: 100 },
+  welcome: { about: 'Change the welcome message of this topic.', value: 'Message. Use \\n for a new line, or "none" for the default.', max: 1500 },
+  name: { about: 'Change the channel name pattern of this topic.', value: 'Must contain {number}, e.g. billing-{number}. "none" = default.', max: 60 },
+  questions: { about: 'Change the questions users answer first.', value: 'Q1 | Q2 [long] | Q3 [optional]. "none" removes them.', max: 1500 },
+};
 
 module.exports = {
   name: 'topicset',
@@ -19,6 +31,11 @@ module.exports = {
     { name: 'field', type: 'string', description: 'What to change', required: true, choices: FIELDS },
     { name: 'value', type: 'string', description: 'New value. "none" clears it. Questions: Q1 | Q2 [long] | Q3 [optional]', required: true, maxLength: 1500 },
   ],
+  subKey: 'field',
+  subcommands: fieldSubcommands(FIELDS, HINTS, [
+    { name: 'panel', type: 'integer', description: 'Panel number', required: true, min: 1 },
+    { name: 'topic', type: 'string', description: 'Topic key (see panellist)', required: true, maxLength: 40 },
+  ]),
   async run(ctx, args) {
     const panel = await getPanel(ctx.guild.id, args.panel);
     if (!panel) return ctx.reply({ embeds: [embeds.error(`Panel #${args.panel} was not found.`)] });

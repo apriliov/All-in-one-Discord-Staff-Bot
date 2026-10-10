@@ -18,9 +18,23 @@ module.exports = {
     { name: 'action', type: 'string', description: 'Setting to change, or show', choices: ACTIONS },
     { name: 'value', type: 'string', description: 'New value (channel, role, number, on/off, "none")', maxLength: 100 },
   ],
+  subcommands: [
+    { name: 'show', description: 'Show the current ticket settings.' },
+    { name: 'category', description: 'Category where new tickets are created.', options: [{ name: 'value', type: 'string', description: 'Category ID, or "none" to clear it.', required: true, maxLength: 100 }] },
+    { name: 'logs', description: 'Channel for ticket logs and transcripts.', options: [{ name: 'value', type: 'string', description: 'Channel mention or ID, or "none" to use the staff log channel.', required: true, maxLength: 100 }] },
+    { name: 'role', description: 'Add or remove a support role.', options: [{ name: 'value', type: 'string', description: 'Role mention or ID (use it again to remove it), or "none" to clear all.', required: true, maxLength: 100 }] },
+    { name: 'limit', description: 'Max open tickets per user.', options: [{ name: 'value', type: 'integer', description: 'Number from 1 to 25.', required: true, min: 1, max: 25 }] },
+    { name: 'claim', description: 'Turn the Claim button on or off.', options: [{ name: 'value', type: 'boolean', description: 'True = on, false = off.', required: true }] },
+    { name: 'feedback', description: 'Ask for a rating after a ticket closes.', options: [{ name: 'value', type: 'boolean', description: 'True = on, false = off.', required: true }] },
+    { name: 'transcript', description: 'DM the transcript to the ticket owner when it closes.', options: [{ name: 'value', type: 'boolean', description: 'True = on, false = off.', required: true }] },
+    { name: 'userclose', description: 'Let the ticket owner close their own ticket.', options: [{ name: 'value', type: 'boolean', description: 'True = on, false = off.', required: true }] },
+    { name: 'ping', description: 'Ping the support roles when a ticket opens.', options: [{ name: 'value', type: 'boolean', description: 'True = on, false = off.', required: true }] },
+    { name: 'autoclose', description: 'Close tickets automatically after some inactivity.', options: [{ name: 'value', type: 'integer', description: 'Hours without messages (1-720). 0 turns it off.', required: true, min: 0, max: 720 }] },
+    { name: 'naming', description: 'Pattern for ticket channel names.', options: [{ name: 'value', type: 'string', description: 'Must contain {number}. Also {user} and {topic}. Example: ticket-{number}', required: true, maxLength: 60 }] },
+  ],
   async run(ctx, args) {
     const action = args.action || 'show';
-    const value = (args.value || '').trim();
+    const value = String(args.value ?? '').trim();
     const guildId = ctx.guild.id;
     const settings = await getSettings(guildId);
     const set = (data) => TicketSettings.updateOne({ guildId }, data);

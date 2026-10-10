@@ -6,8 +6,18 @@ const { refreshPanel, postPanel } = require('../../services/tickets');
 const { getPanel } = require('../../services/ticketAdmin');
 const { channelId, isNone } = require('../../utils/parse');
 const { logEvent } = require('../../services/cases');
+const { fieldSubcommands } = require('../../utils/subcommands');
 
 const FIELDS = ['title', 'description', 'color', 'image', 'footer', 'style', 'channel'];
+const HINTS = {
+  title: { about: 'Change the panel title.', value: 'New title.', max: 200 },
+  description: { about: 'Change the panel description.', value: 'New description. Use \\n for a new line.', max: 2000 },
+  color: { about: 'Change the panel embed color.', value: 'Hex color like #5865F2, or "none".', max: 20 },
+  image: { about: 'Change the panel image.', value: 'Image URL (http/https), or "none" to remove it.', max: 500 },
+  footer: { about: 'Change the panel footer.', value: 'Footer text, or "none" to remove it.', max: 200 },
+  style: { about: 'Switch between buttons and a dropdown menu.', value: 'button or menu', max: 10, choices: ['button', 'menu'] },
+  channel: { about: 'Move the panel to another channel.', value: 'Text channel mention or ID.', max: 100 },
+};
 
 module.exports = {
   name: 'paneledit',
@@ -19,6 +29,8 @@ module.exports = {
     { name: 'field', type: 'string', description: 'What to change', required: true, choices: FIELDS },
     { name: 'value', type: 'string', description: 'New value. "none" clears image, footer and color. Style: button or menu.', required: true, maxLength: 2000 },
   ],
+  subKey: 'field',
+  subcommands: fieldSubcommands(FIELDS, HINTS, [{ name: 'id', type: 'integer', description: 'Panel number', required: true, min: 1 }]),
   async run(ctx, args) {
     const panel = await getPanel(ctx.guild.id, args.id);
     if (!panel) return ctx.reply({ embeds: [embeds.error(`Panel #${args.id} was not found. See \`{prefix}panellist\`.`)] });
