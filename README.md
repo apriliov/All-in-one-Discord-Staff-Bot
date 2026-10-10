@@ -434,8 +434,10 @@ src/
 
 ## License
 
-Released under the [MIT License](LICENSE) - Copyright (c) 2026 APRILIOV.
+Released under the **APRILIOV Use-Only License** - Copyright (c) 2026 APRILIOV. All rights reserved. See the [LICENSE](LICENSE) file for the full terms.
 
-You may use, copy, modify and distribute this software, provided that the copyright and license notice stays in all copies. The software is provided "as is", without warranty of any kind.
+- **Allowed:** use the bot and configure it through its settings (`.env` and the in-app commands).
+- **Not allowed:** modifying the code, selling or renting it (or access to it), and sharing or redistributing it.
+- The copyright and license notice must stay intact.
 
-The license notice is also shown in the console every time the bot starts.
+The software is provided "as is", without warranty of any kind. The license notice is also shown in the console every time the bot starts.
