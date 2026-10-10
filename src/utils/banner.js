@@ -14,14 +14,14 @@ const ART = [
 ];
 
 const LICENSE_LINES = [
-  'MIT License - Copyright (c) 2026 APRILIOV',
-  'Permission is granted to use, copy, modify and distribute this software,',
-  'provided that this copyright and license notice stays in all copies.',
+  'APRILIOV Use-Only License - Copyright (c) 2026 APRILIOV. All rights reserved.',
+  'You may use this software, but you may not modify it, sell it or redistribute it.',
+  'See the LICENSE file for the full terms.',
   'The software is provided "as is", without warranty of any kind.',
 ];
 
 const FEATURES = [
-  'Slash commands and prefix commands (choose your own prefix with PREFIX in .env)',
+  'Slash commands and prefix commands (default prefix !, set PREFIX in .env)',
   'Moderation toolkit: warn, timeout, kick, ban, softban, purge and a full case history',
   'Modmail: private tickets, transcripts, open/close switch and editable welcome and close messages',
   'Ticket system: panels with buttons or menus, topics, forms, claim, priority, transcripts, ratings and auto-close',
@@ -34,7 +34,7 @@ const FEATURES = [
   'MongoDB storage with automatic slash command sync',
 ];
 
-const EXPECTED_HASH = '0fe34812e79862ebf2aac1fc1e4f8ea5e38a1248ee5b07201fbba385b57a7efd';
+const EXPECTED_HASH = '067eebc4c46ea8bf5525c2316031872bd14b35f60135653aeadfe25934a475c9';
 
 const state = { shown: false };
 
