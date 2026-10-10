@@ -12,7 +12,7 @@ const MAX_MS = 365 * 24 * 60 * 60 * 1000;
 module.exports = {
   name: 'gcreate',
   aliases: ['gstart', 'giveaway'],
-  description: 'Start a giveaway. Prefix: z gcreate #channel 1h 2 Prize name',
+  description: 'Start a giveaway: channel, duration, number of winners and prize.',
   category: 'Giveaways',
   level: 'admin',
   options: [
