@@ -1,7 +1,7 @@
 {
   "name": "staff-helper-bot",
   "version": "1.1.0",
-  "description": "Private staff helper bot for Discord servers (helpers, admins and owner only). Slash commands + prefix (z / Z).",
+  "description": "Private staff helper bot for Discord servers (helpers, admins and owner only). Slash commands + prefix commands.",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",

@@ -115,7 +115,7 @@ Turn on **Developer Mode** in Discord (User Settings -> Advanced) so you can rig
 | `ALLOWED_GUILD_IDS` | No | empty (no limit) | Server IDs the bot may stay in, comma separated. The bot leaves every other server. |
 | `AUTO_DEPLOY` | No | on | Set to `false` to stop the automatic slash command sync on start. Any other value (or empty) keeps it on. |
 | `DEFAULT_STATUS` | No | `Helping the staff team` | Custom text of the bot status. The bot adds `| Modmail Open` or `| Modmail Close` automatically. |
-| `PREFIX` | No | `!` | Command prefix. Several prefixes can be separated by commas, e.g. `!,?`. |
+| `PREFIX` | No | `!` | Command prefix. Anyone can change it here. Several prefixes can be separated by commas, e.g. `!,?`. The first one is shown in the bot's messages. |
 | `MODMAIL_CATEGORY_ID` | No | empty | ID of the category where modmail ticket channels are created. |
 | `STATUS_USER_ID` | No | first `OWNER_IDS` entry | User tracked by the live status page. |
 | `STATUS_BOT_ID` | No | `CLIENT_ID` | Bot tracked by the live status page. |
@@ -155,7 +155,7 @@ Everyone else is ignored (prefix) or politely refused (slash). Staff cannot mode
 
 ## Commands
 
-Every command works as a slash command (`/warn`) and with the prefix (`!warn`). Use `!help` to see the commands you can use, or `!help <command>` for details.
+Every command works as a slash command (`/warn`) and with your text prefix (`!warn`). Examples in this README use the default prefix `!`. If you changed `PREFIX` in `.env`, use your own prefix instead. Use `help` to see the commands you can use, or `help <command>` for details.
 
 ### Utility
 
